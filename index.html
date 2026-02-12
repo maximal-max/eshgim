@@ -15,6 +15,8 @@
             margin: 0;
             overflow: hidden;
             text-align: center;
+            /* Wichtig für Mobile: Verhindert Zoom beim schnellen Tippen */
+            touch-action: manipulation; 
         }
 
         .container {
@@ -54,9 +56,10 @@
             cursor: pointer;
             width: 120px; 
             transition: background-color 0.2s, transform 0.1s;
+            /* Wichtig für Mobile: Kein blaues Highlight beim Tippen */
+            -webkit-tap-highlight-color: transparent;
         }
 
-        /* Classes for the states */
         .btn-yes {
             background-color: #28a745; 
             color: white;
@@ -89,7 +92,10 @@
         <div class="buttons">
             <button id="btn1" class="btn-yes" onclick="acceptLove()">Yes</button>
             
-            <button id="btn2" class="btn-no" onmouseover="swapButtons('btn2')" onclick="acceptLove()">No</button>
+            <button id="btn2" class="btn-no" 
+                onmouseover="swapButtons('btn2', event)" 
+                ontouchstart="swapButtons('btn2', event)" 
+                onclick="acceptLove()">No</button>
         </div>
 
         <div id="success-message">
@@ -100,25 +106,36 @@
     </div>
 
     <script>
-        function swapButtons(hoveredId) {
+        function swapButtons(hoveredId, event) {
+            // WICHTIG: Wenn es ein Touch-Event ist (Handy), verhindern wir den Klick.
+            // Das sorgt dafür, dass sich nur die Buttons tauschen, aber "acceptLove" noch nicht ausgeführt wird.
+            if (event && event.type === 'touchstart') {
+                event.preventDefault();
+            }
+
             const btn1 = document.getElementById('btn1');
             const btn2 = document.getElementById('btn2');
 
-            // Determine which button was hovered and which is the "other" one
+            // Welcher Button wurde berührt?
             let hoveredBtn = document.getElementById(hoveredId);
+            // Welcher ist der andere?
             let otherBtn = (hoveredBtn === btn1) ? btn2 : btn1;
 
-            // 1. Make the hovered button YES (Green)
+            // 1. Der berührte Button wird zu JA (Grün)
             hoveredBtn.innerText = "Yes";
             hoveredBtn.className = "btn-yes";
-            // Remove the trap from this button (so it stays Yes)
+            
+            // Fallen entfernen (damit man ihn jetzt klicken kann)
             hoveredBtn.onmouseover = null; 
+            hoveredBtn.ontouchstart = null;
 
-            // 2. Make the other button NO (Red)
+            // 2. Der andere Button wird zu NEIN (Rot)
             otherBtn.innerText = "No";
             otherBtn.className = "btn-no";
-            // Add the trap to the new No button
-            otherBtn.onmouseover = function() { swapButtons(otherBtn.id) };
+            
+            // Falle auf den neuen Nein-Button legen (für Maus UND Touch)
+            otherBtn.onmouseover = function(e) { swapButtons(otherBtn.id, e) };
+            otherBtn.ontouchstart = function(e) { swapButtons(otherBtn.id, e) };
         }
 
         function acceptLove() {
