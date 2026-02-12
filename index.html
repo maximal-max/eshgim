@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Für dich ❤️</title>
+    <title>For you ❤️</title>
     <style>
         body {
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #ffe6e6; /* Helles Rosa */
+            background-color: #ffe6e6; 
             font-family: 'Arial', sans-serif;
             margin: 0;
             overflow: hidden;
@@ -23,6 +23,7 @@
             border-radius: 20px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.1);
             max-width: 90%;
+            width: 400px; 
         }
 
         h1 {
@@ -39,9 +40,10 @@
 
         .buttons {
             display: flex;
+            justify-content: center; 
             gap: 20px;
-            justify-content: center;
-            flex-wrap: wrap;
+            margin-top: 20px;
+            min-height: 60px; 
         }
 
         button {
@@ -50,22 +52,23 @@
             border: none;
             border-radius: 50px;
             cursor: pointer;
-            transition: transform 0.2s;
+            width: 120px; 
+            transition: background-color 0.2s, transform 0.1s;
         }
 
-        #yesBtn {
-            background-color: #28a745; /* Grün */
+        /* Classes for the states */
+        .btn-yes {
+            background-color: #28a745; 
             color: white;
             font-weight: bold;
         }
 
-        #noBtn {
-            background-color: #dc3545; /* Rot */
+        .btn-no {
+            background-color: #dc3545; 
             color: white;
             font-weight: bold;
         }
 
-        /* Versteckter Erfolgs-Text */
         #success-message {
             display: none;
             margin-top: 20px;
@@ -81,44 +84,48 @@
     <div class="container">
         <img src="https://media1.tenor.com/m/m_s1s2c-tNIAAAAC/cat-love.gif" alt="Cute Cat" id="mainImage">
         
-        <h1 id="question">Möchtest du mein Valentine sein? 🌹</h1>
+        <h1 id="question">Eshgim, will you be my Valentine? 🌹</h1>
 
         <div class="buttons">
-            <button id="yesBtn" onclick="acceptLove()">Jaaaa!</button>
-            <button id="noBtn" onmouseover="changeToYes()" onclick="acceptLove()">Nein</button>
+            <button id="btn1" class="btn-yes" onclick="acceptLove()">Yes</button>
+            
+            <button id="btn2" class="btn-no" onmouseover="swapButtons('btn2')" onclick="acceptLove()">No</button>
         </div>
 
         <div id="success-message">
-            <h2>Juhu! Ich liebe dich! ❤️</h2>
-            <p>Freu mich auf unser Date!</p>
+            <h2>Yay! I love you! ❤️</h2>
+            <p>Can't wait for our date!</p>
             <img src="https://media1.tenor.com/m/JcaC6M-l1yAAAAAC/mochi-cat.gif" alt="Happy Cat" style="max-width: 150px;">
         </div>
     </div>
 
     <script>
-        function changeToYes() {
-            const noBtn = document.getElementById('noBtn');
-            
-            // Ändert den Text
-            noBtn.innerText = "Jaaaa!";
-            
-            // Ändert die Farbe zu Grün (wie der Ja-Button)
-            noBtn.style.backgroundColor = "#28a745";
-            
-            // Optional: Lässt den Button kurz wackeln für Aufmerksamkeit
-            noBtn.style.transform = "scale(1.1)";
+        function swapButtons(hoveredId) {
+            const btn1 = document.getElementById('btn1');
+            const btn2 = document.getElementById('btn2');
+
+            // Determine which button was hovered and which is the "other" one
+            let hoveredBtn = document.getElementById(hoveredId);
+            let otherBtn = (hoveredBtn === btn1) ? btn2 : btn1;
+
+            // 1. Make the hovered button YES (Green)
+            hoveredBtn.innerText = "Yes";
+            hoveredBtn.className = "btn-yes";
+            // Remove the trap from this button (so it stays Yes)
+            hoveredBtn.onmouseover = null; 
+
+            // 2. Make the other button NO (Red)
+            otherBtn.innerText = "No";
+            otherBtn.className = "btn-no";
+            // Add the trap to the new No button
+            otherBtn.onmouseover = function() { swapButtons(otherBtn.id) };
         }
 
         function acceptLove() {
-            // Versteckt die Frage und Buttons
             document.getElementById('question').style.display = 'none';
             document.querySelector('.buttons').style.display = 'none';
             document.getElementById('mainImage').style.display = 'none';
-
-            // Zeigt die Erfolgsnachricht
             document.getElementById('success-message').style.display = 'block';
-            
-            // Konfetti Effekt (Simpel)
             document.body.style.backgroundColor = "#ffcccc";
         }
     </script>
