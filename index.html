@@ -95,7 +95,7 @@
 
     <div class="container" id="main-content">
         
-        <img src="cat_ask.gif" alt="Cute Cat" id="mainImage">
+        <img src="img/cat_0.gif" alt="Cute Cat" id="mainImage">
         
         <h1 id="question">Eshgim, will you be my Valentine? 🌹</h1>
 
@@ -106,7 +106,7 @@
     </div>
 
     <div id="success-message">
-        <img src="cat_yes.gif" alt="Happy Cat">
+        <img src="img/cat_7.gif" alt="Happy Cat">
         <h2>Yay! I knew it! ❤️</h2>
         <p>See you on Valentine's Day!</p>
     </div>
@@ -119,23 +119,23 @@
         const steps = [
             { 
                 text: "Please think again!", 
-                img: "cat_5.gif" // Geschockt
+                img: "img/cat_1.gif" 
             },
             { 
                 text: "Look at the sad cat...", 
-                img: "cat_2.gif" // Weinend
+                img: "img/cat_2.gif" 
             },
             { 
                 text: "Don't do this to me :(", 
-                img: "cat_1.gif" // Traurig schauend
+                img: "img/cat_3.gif" 
             },
             { 
                 text: "You're breaking my heart!", 
-                img: "cat_4.gif" // Herzschmerz
+                img: "img/cat_4.gif" 
             },
             { 
                 text: "I'm gonna cry for real...", 
-                img: "cat_3.gif" // Sturzbach
+                img: "img/cat_5.gif" 
             }
         ];
 
@@ -158,7 +158,7 @@
 
                 // Finaler Text & Bild
                 questionText.innerText = "Okay, that's it! I give you no choice! 😈";
-                img.src = "cat_6.gif"; // Böse Katze
+                img.src = "img/cat_6.gif"; // Böse Katze
 
                 // Roter Button wird manipuliert
                 noBtn.innerText = "YES (but in red)";
