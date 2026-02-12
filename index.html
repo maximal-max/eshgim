@@ -21,6 +21,8 @@
         .container {
             position: relative;
             z-index: 1;
+            width: 100%;
+            max-width: 600px;
         }
 
         h1 {
@@ -28,6 +30,8 @@
             font-size: 2rem;
             margin-bottom: 20px;
             padding: 0 20px;
+            min-height: 60px; /* Damit der Text nicht springt */
+            transition: all 0.2s ease;
         }
 
         img {
@@ -53,7 +57,7 @@
             border: none;
             border-radius: 50px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.1s ease; /* Schnellerer Klick-Effekt */
             -webkit-tap-highlight-color: transparent; 
         }
 
@@ -103,8 +107,8 @@
     <script>
         let noClickCount = 0;
 
+        // Die Texte, die oben in der Überschrift erscheinen
         const phrases = [
-            "No",
             "Are you sure?",
             "Really sure?",
             "Eshgim please!",
@@ -114,23 +118,25 @@
             "I'm gonna be very sad...",
             "Very very sad...",
             "Ok, I'll stop asking...",
-            "Just kidding, SAY YES! ❤️"
+            "Just kidding, say YES! ❤️"
         ];
 
         function handleNo() {
+            // Zähler erhöhen
             noClickCount++;
             
-            // 1. Text ändern
-            const noBtn = document.getElementById('noBtn');
-            const textIndex = Math.min(noClickCount, phrases.length - 1);
-            noBtn.innerText = phrases[textIndex];
+            // 1. Überschrift (h1) ändern
+            const questionText = document.getElementById('question');
+            // Holt den Text aus der Liste. Wenn Liste zu Ende, nimm den letzten Satz.
+            const textIndex = Math.min(noClickCount - 1, phrases.length - 1);
+            questionText.innerText = phrases[textIndex];
 
             // 2. YES Button vergrößern
             const yesBtn = document.getElementById('yesBtn');
             const currentSize = parseFloat(window.getComputedStyle(yesBtn).fontSize);
             yesBtn.style.fontSize = (currentSize * 1.4) + "px";
             
-            // Padding auch vergrößern
+            // Padding auch vergrößern für fetten Button
             const currentPaddingTop = parseFloat(window.getComputedStyle(yesBtn).paddingTop);
             const currentPaddingRight = parseFloat(window.getComputedStyle(yesBtn).paddingRight);
             yesBtn.style.padding = (currentPaddingTop * 1.2) + "px " + (currentPaddingRight * 1.2) + "px";
