@@ -11,7 +11,7 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #ffe6e6; /* Hellrosa */
+            background-color: #ffe6e6; 
             font-family: 'Arial', sans-serif;
             margin: 0;
             overflow: hidden; 
@@ -30,8 +30,11 @@
             font-size: 2rem;
             margin-bottom: 20px;
             padding: 0 20px;
-            min-height: 60px; /* Damit der Text nicht springt */
+            min-height: 80px; /* Etwas höher damit Text Platz hat */
             transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         img {
@@ -57,7 +60,7 @@
             border: none;
             border-radius: 50px;
             cursor: pointer;
-            transition: all 0.1s ease; /* Schnellerer Klick-Effekt */
+            transition: all 0.1s ease; 
             -webkit-tap-highlight-color: transparent; 
         }
 
@@ -107,27 +110,23 @@
     <script>
         let noClickCount = 0;
 
-        // Die Texte, die oben in der Überschrift erscheinen
+        // HIER SIND DIE NEUEN TEXTE (Logisch angepasst)
+        // Diese Texte erscheinen, wenn sie auf "No" drückt.
         const phrases = [
-            "Are you sure?",
-            "Really sure?",
-            "Eshgim please!",
-            "Don't do this to me :(",
-            "I'm gonna cry...",
-            "You're breaking my heart!",
-            "I'm gonna be very sad...",
-            "Very very sad...",
-            "Ok, I'll stop asking...",
-            "Just kidding, say YES! ❤️"
+            "Please think again!",        // Bitte denk nochmal nach!
+            "Don't do this to me :(",     // Tu mir das nicht an
+            "Look at the sad cat...",     // Guck die traurige Katze an
+            "You're breaking my heart!",  // Du brichst mein Herz
+            "I'm gonna cry...",           // Ich werde weinen
+            "Seriously... I'm crying...", // Ernsthaft, ich weine
+            "Please just click Yes! ❤️"    // Klick einfach Ja!
         ];
 
         function handleNo() {
-            // Zähler erhöhen
             noClickCount++;
             
             // 1. Überschrift (h1) ändern
             const questionText = document.getElementById('question');
-            // Holt den Text aus der Liste. Wenn Liste zu Ende, nimm den letzten Satz.
             const textIndex = Math.min(noClickCount - 1, phrases.length - 1);
             questionText.innerText = phrases[textIndex];
 
@@ -136,22 +135,22 @@
             const currentSize = parseFloat(window.getComputedStyle(yesBtn).fontSize);
             yesBtn.style.fontSize = (currentSize * 1.4) + "px";
             
-            // Padding auch vergrößern für fetten Button
+            // Padding vergrößern
             const currentPaddingTop = parseFloat(window.getComputedStyle(yesBtn).paddingTop);
             const currentPaddingRight = parseFloat(window.getComputedStyle(yesBtn).paddingRight);
             yesBtn.style.padding = (currentPaddingTop * 1.2) + "px " + (currentPaddingRight * 1.2) + "px";
 
-            // 3. Bild ändern (Startet erst NACH dem ersten Klick)
+            // 3. Bild ändern
             const img = document.getElementById('mainImage');
             
             if (noClickCount === 1) {
-                // Bild: Schockierte Katze
+                // Bild 1: Geschockt
                 img.src = "https://media.tenor.com/ivKWdfQAeXgAAAAi/cat-shocked.gif"; 
             } else if (noClickCount === 3) {
-                // Bild: Weinende Katze
+                // Bild 2: Weinend
                 img.src = "https://media.tenor.com/0iK8jC2jTwwAAAAi/sad-cat-crying.gif";
             } else if (noClickCount === 5) {
-                // Bild: Wütende/Verzweifelte Katze
+                // Bild 3: Verzweifelt
                 img.src = "https://media.tenor.com/f2QeNaXzZcMAAAAi/crying-cat.gif";
             }
         }
