@@ -16,7 +16,7 @@
             margin: 0;
             overflow: hidden; 
             text-align: center;
-            touch-action: manipulation; /* Wichtig für Handy */
+            touch-action: manipulation;
         }
 
         .container {
@@ -29,7 +29,7 @@
 
         h1 {
             color: #d63384;
-            font-size: 1.8rem; /* Etwas kleiner für längere Texte */
+            font-size: 1.8rem;
             margin-bottom: 20px;
             min-height: 80px;
             transition: all 0.2s ease;
@@ -65,7 +65,7 @@
             cursor: pointer;
             transition: all 0.1s ease; 
             -webkit-tap-highlight-color: transparent;
-            white-space: nowrap; /* Verhindert Umbruch im Button */
+            white-space: nowrap; 
         }
 
         .btn-yes {
@@ -112,82 +112,82 @@
     </div>
 
     <script>
-        let noClickCount = 0;
-        let finaleMode = false; // Merkt sich, ob wir im Finale sind
+        let clickCount = 0;
+        let finaleMode = false;
 
-        // Die Texte, die nacheinander kommen
-        const phrases = [
-            "Please think again!",        // Klick 1
-            "Look at the sad cat...",     // Klick 2 (Hier kommt das traurige Bild)
-            "Don't do this to me :(",     // Klick 3
-            "You're breaking my heart!",  // Klick 4
-            "I'm gonna cry for real...",  // Klick 5
-            "Please just click Yes! ❤️"    // Klick 6
-            // Wenn man danach nochmal klickt -> FINALE
+        // HIER ist die Liste mit Texten UND Bildern für jeden Schritt
+        const steps = [
+            { 
+                text: "Please think again!", 
+                img: "cat_1" // Geschockt
+            },
+            { 
+                text: "Look at the sad cat...", 
+                img: "cat_2" // Weinend
+            },
+            { 
+                text: "Don't do this to me :(", 
+                img: "cat_3" // Traurig schauend
+            },
+            { 
+                text: "You're breaking my heart!", 
+                img: "cat_4" // Herzschmerz
+            },
+            { 
+                text: "I'm gonna cry for real...", 
+                img: "cat_5" // Sturzbach
+            }
         ];
 
         function handleNo() {
-            // Wenn wir schon im Finale sind, bedeutet der Klick auf den roten Button jetzt "JA"
+            // Wenn wir im Finale sind, ist der rote Button jetzt ein JA-Button
             if (finaleMode) {
                 acceptLove();
-                return; // Funktion hier beenden
+                return;
             }
 
-            noClickCount++;
             const img = document.getElementById('mainImage');
             const questionText = document.getElementById('question');
             const noBtn = document.getElementById('noBtn');
             const yesBtn = document.getElementById('yesBtn');
 
             // --- DAS FINALE ---
-            // Prüfen, ob wir am Ende der Liste angekommen sind
-            if (noClickCount > phrases.length) {
+            // Wenn wir alle Schritte durchlaufen haben
+            if (clickCount >= steps.length) {
                 finaleMode = true;
 
-                // 1. Neuer dramatischer Text
+                // Finaler Text & Bild
                 questionText.innerText = "Okay, that's it! I give you no choice! 😈";
+                img.src = "cat_6"; // Böse Katze
 
-                // 2. Böses/Entschlossenes Katzenbild
-                img.src = "https://media2.giphy.com/media/v1.Y2lkPTZjMDliOTUyeDNpMThibnZib3RzcmdldHVxMnczYXlybDA1cWI5MHJhbXJxdHRqeiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/YLPOIP1jPu1N87yemm/giphy.gif"; 
-
-                // 3. Der rote Button ändert sich
+                // Roter Button wird manipuliert
                 noBtn.innerText = "YES (but in red)";
-                // WICHTIG: Seine Funktion wird oben am Anfang von handleNo() geändert
                 
-                // Optional: Den grünen Button wieder auf Normalgröße setzen, damit es ordentlich aussieht
+                // Grüner Button wieder normal machen (sieht besser aus)
                 yesBtn.style.fontSize = "1.2rem";
                 yesBtn.style.padding = "15px 30px";
                 
-                return; // Wir beenden hier, damit der Button nicht weiter wächst
+                return;
             }
 
+            // --- NORMALER SCHRITT ---
+            // Wir holen uns den aktuellen Schritt aus der Liste
+            const currentStep = steps[clickCount];
 
-            // --- NORMALER ABLAUF (Vor dem Finale) ---
+            // Text und Bild ändern
+            questionText.innerText = currentStep.text;
+            img.src = currentStep.img;
 
-            // 1. Überschrift ändern
-            // Wir nehmen den Text passend zum Klick-Zähler (minus 1 wegen Array-Start bei 0)
-            questionText.innerText = phrases[noClickCount - 1];
-
-            // 2. YES Button vergrößern
+            // YES Button vergrößern
             const currentSize = parseFloat(window.getComputedStyle(yesBtn).fontSize);
-            // Er wächst etwas langsamer, damit wir mehr Klicks schaffen bis zum Finale
-            yesBtn.style.fontSize = (currentSize * 1.2) + "px";
+            yesBtn.style.fontSize = (currentSize * 1.3) + "px";
+            
+            // Padding anpassen
             const currentPadding = parseFloat(window.getComputedStyle(yesBtn).paddingTop);
-            yesBtn.style.padding = (currentPadding * 1.15) + "px " + (currentPadding * 1.3) + "px";
+            yesBtn.style.padding = (currentPadding * 1.2) + "px " + (currentPadding * 1.3) + "px";
 
-            // 3. Bilder genau synchronisieren
-            // Klick 1: Geschockt
-            if (noClickCount === 1) {
-                img.src = "https://i.pinimg.com/originals/56/f8/64/56f864bde74533a9ce279b8414916bf2.gif"; 
-            } 
-            // Klick 2: Text ist "Look at the sad cat..." -> Weinendes Bild
-            else if (noClickCount === 2) {
-                img.src = "https://media2.giphy.com/media/v1.Y2lkPTZjMDliOTUyYXczNGZtczZxdXpjNmdnZjV3MG1jbHB0djk1MmFpZXl6eHljcWQ1ZiZlcD12MV9naWZzX3NlYXJjaCZjdD1n/qpCvOBBmBkble/200.gif";
-            } 
-            // Klick 5: Sehr traurig
-            else if (noClickCount === 5) {
-                img.src = "https://media.tenor.com/14b3oQe1uw0AAAAM/cat-crying-cat.gif";
-            }
+            // Zähler erhöhen für den nächsten Klick
+            clickCount++;
         }
 
         function acceptLove() {
