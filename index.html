@@ -11,15 +11,14 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background-color: #ffe6e6; /* Light Pink */
+            background-color: #ffe6e6; /* Hellrosa */
             font-family: 'Arial', sans-serif;
             margin: 0;
-            overflow: hidden; /* Verhindert Scrollbalken wenn Button riesig wird */
+            overflow: hidden; 
             text-align: center;
         }
 
         .container {
-            /* Container ist jetzt flexibel, damit er mitwächst */
             position: relative;
             z-index: 1;
         }
@@ -45,7 +44,7 @@
             align-items: center;
             gap: 20px;
             margin-top: 20px;
-            flex-wrap: wrap; /* Wichtig damit Buttons umbrechen */
+            flex-wrap: wrap; 
         }
 
         button {
@@ -55,18 +54,17 @@
             border-radius: 50px;
             cursor: pointer;
             transition: all 0.3s ease;
-            /* Verhindert blaues Highlight am Handy */
             -webkit-tap-highlight-color: transparent; 
         }
 
         .btn-yes {
-            background-color: #28a745; /* Green */
+            background-color: #28a745; /* Grün */
             color: white;
             font-weight: bold;
         }
 
         .btn-no {
-            background-color: #dc3545; /* Red */
+            background-color: #dc3545; /* Rot */
             color: white;
             font-weight: bold;
         }
@@ -85,7 +83,8 @@
 <body>
 
     <div class="container" id="main-content">
-        <img src="https://media.tenor.com/K_wKszQnN2AAAAAi/mocha-mochi.gif" alt="Cute Cat" id="mainImage">
+        
+        <img src="cat_ask.gif" alt="Cute Cat" id="mainImage">
         
         <h1 id="question">Eshgim, will you be my Valentine? 🌹</h1>
 
@@ -96,7 +95,7 @@
     </div>
 
     <div id="success-message">
-        <img src="https://media.tenor.com/gUiu1zyxfzYAAAAi/bear-kiss-bear-kisses.gif" alt="Happy Cat">
+        <img src="cat_yes.gif" alt="Happy Cat">
         <h2>Yay! I knew it! ❤️</h2>
         <p>See you on Valentine's Day!</p>
     </div>
@@ -104,7 +103,6 @@
     <script>
         let noClickCount = 0;
 
-        // Liste mit lustigen Texten, die nacheinander kommen
         const phrases = [
             "No",
             "Are you sure?",
@@ -124,30 +122,29 @@
             
             // 1. Text ändern
             const noBtn = document.getElementById('noBtn');
-            // Holt den nächsten Text aus der Liste (oder den letzten, wenn Liste zu Ende)
             const textIndex = Math.min(noClickCount, phrases.length - 1);
             noBtn.innerText = phrases[textIndex];
 
-            // 2. YES Button vergrößern (Das ist der witzige Teil)
+            // 2. YES Button vergrößern
             const yesBtn = document.getElementById('yesBtn');
-            // Schriftgröße wächst mit jedem Klick
             const currentSize = parseFloat(window.getComputedStyle(yesBtn).fontSize);
-            const newSize = currentSize * 1.4; // Wächst um 40% pro Klick
-            yesBtn.style.fontSize = newSize + "px";
+            yesBtn.style.fontSize = (currentSize * 1.4) + "px";
             
-            // Optional: Padding auch vergrößern damit der Button fett aussieht
-            const currentPadding = parseFloat(window.getComputedStyle(yesBtn).padding);
-            yesBtn.style.padding = (currentPadding * 1.2) + "px " + (currentPadding * 1.5) + "px";
+            // Padding auch vergrößern
+            const currentPaddingTop = parseFloat(window.getComputedStyle(yesBtn).paddingTop);
+            const currentPaddingRight = parseFloat(window.getComputedStyle(yesBtn).paddingRight);
+            yesBtn.style.padding = (currentPaddingTop * 1.2) + "px " + (currentPaddingRight * 1.2) + "px";
 
-            // 3. Bild ändern (Optional - macht es noch dramatischer)
+            // 3. Bild ändern (Startet erst NACH dem ersten Klick)
             const img = document.getElementById('mainImage');
+            
             if (noClickCount === 1) {
                 // Bild: Schockierte Katze
                 img.src = "https://media.tenor.com/ivKWdfQAeXgAAAAi/cat-shocked.gif"; 
             } else if (noClickCount === 3) {
                 // Bild: Weinende Katze
                 img.src = "https://media.tenor.com/0iK8jC2jTwwAAAAi/sad-cat-crying.gif";
-            } else if (noClickCount === 6) {
+            } else if (noClickCount === 5) {
                 // Bild: Wütende/Verzweifelte Katze
                 img.src = "https://media.tenor.com/f2QeNaXzZcMAAAAi/crying-cat.gif";
             }
@@ -157,8 +154,6 @@
             document.getElementById('main-content').style.display = 'none';
             document.getElementById('success-message').style.display = 'block';
             document.body.style.backgroundColor = "#ffcccc";
-            
-            // Konfetti Effekt (Simuliert durch Hintergrundfarbe)
         }
     </script>
 
