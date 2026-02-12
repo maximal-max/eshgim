@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Für dich ❤️</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #ffe6e6; /* Helles Rosa */
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .container {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            max-width: 90%;
+        }
+
+        h1 {
+            color: #d63384;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        img {
+            max-width: 200px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        #yesBtn {
+            background-color: #28a745; /* Grün */
+            color: white;
+            font-weight: bold;
+        }
+
+        #noBtn {
+            background-color: #dc3545; /* Rot */
+            color: white;
+            font-weight: bold;
+        }
+
+        /* Versteckter Erfolgs-Text */
+        #success-message {
+            display: none;
+            margin-top: 20px;
+        }
+        
+        #success-message h2 {
+            color: #d63384;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <img src="https://media1.tenor.com/m/m_s1s2c-tNIAAAAC/cat-love.gif" alt="Cute Cat" id="mainImage">
+        
+        <h1 id="question">Möchtest du mein Valentine sein? 🌹</h1>
+
+        <div class="buttons">
+            <button id="yesBtn" onclick="acceptLove()">Jaaaa!</button>
+            <button id="noBtn" onmouseover="changeToYes()" onclick="acceptLove()">Nein</button>
+        </div>
+
+        <div id="success-message">
+            <h2>Juhu! Ich liebe dich! ❤️</h2>
+            <p>Freu mich auf unser Date!</p>
+            <img src="https://media1.tenor.com/m/JcaC6M-l1yAAAAAC/mochi-cat.gif" alt="Happy Cat" style="max-width: 150px;">
+        </div>
+    </div>
+
+    <script>
+        function changeToYes() {
+            const noBtn = document.getElementById('noBtn');
+            
+            // Ändert den Text
+            noBtn.innerText = "Jaaaa!";
+            
+            // Ändert die Farbe zu Grün (wie der Ja-Button)
+            noBtn.style.backgroundColor = "#28a745";
+            
+            // Optional: Lässt den Button kurz wackeln für Aufmerksamkeit
+            noBtn.style.transform = "scale(1.1)";
+        }
+
+        function acceptLove() {
+            // Versteckt die Frage und Buttons
+            document.getElementById('question').style.display = 'none';
+            document.querySelector('.buttons').style.display = 'none';
+            document.getElementById('mainImage').style.display = 'none';
+
+            // Zeigt die Erfolgsnachricht
+            document.getElementById('success-message').style.display = 'block';
+            
+            // Konfetti Effekt (Simpel)
+            document.body.style.backgroundColor = "#ffcccc";
+        }
+    </script>
+
+</body>
+</html>
